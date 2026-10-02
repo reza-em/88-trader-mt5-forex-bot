@@ -1,0 +1,50 @@
+# Secrets / environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.keystore
+*.jks
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+# Node
+node_modules/
+.expo/
+# Databases, state, runtime files
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
+*.sqlite
+*.sqlite3
+*.sqlite-journal
+state*.json
+owner.json
+prefs.json
+api_config.json
+*.log
+*.lock
+*.pid
+*.out
+# Data, backups, downloads, caches
+data/raw/
+data/dict.sqlite
+downloads/
+tmp/
+tmp_*/
+tts_cache/
+backups/
+*.bak
+*.orig
+media/
+reports/
+*.zip
+*.tar.gz
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

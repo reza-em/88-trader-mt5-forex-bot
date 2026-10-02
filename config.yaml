@@ -1,0 +1,72 @@
+# ============================================================
+#  88 Trader - config.yaml
+#  فایل تنظیمات ربات / Bot configuration
+#  * فقط حساب DEMO. / DEMO account only by default.
+#  * رمز عبور و توکن اینجا نوشته نمی‌شود؛ در فایل .env بگذارید.
+#  * تغییراتی که از تلگرام می‌دهید در data/overrides.json ذخیره می‌شود
+#    (برای برگشت به این فایل، آن فایل را پاک کنید).
+# ============================================================
+
+mt5:
+  login: 0                      # شماره حساب دمو (عدد) / your DEMO account number
+  server: "Alpari-MT5-Demo"     # نام دقیق سرور را از MT5 کپی کنید / exact server name from MT5 (File > Login to Trade Account)
+  path: ""                      # اختیاری: مسیر terminal64.exe / optional terminal path
+  timeout_ms: 60000
+  symbol_suffix: ""             # اگر نمادها پسوند دارند مثل ".m" یا "ecn" اینجا بنویسید
+  server_utc_offset_hours: auto # ساعت سرور بروکر نسبت به UTC (auto = تشخیص خودکار)
+  # password: از متغیر محیطی MT5_PASSWORD (یا .env) خوانده می‌شود
+
+trading:
+  symbols: [EURUSD, GBPUSD, USDJPY]   # فقط جفت‌ارزهای اصلی. XAUUSD به‌طور پیش‌فرض خاموش است
+  timeframe: H1                       # M15 | M30 | H1 | H4
+  sessions_utc: ["07:00-16:00"]       # ساعت‌های مجاز معامله (UTC). لندن+نیویورک. ایران ≈ UTC+3:30
+  trading_days: [0, 1, 2, 3, 4]       # 0=دوشنبه ... 4=جمعه
+  max_spread_points:                  # حداکثر اسپرد (point) - 10 point = 1 pip
+    default: 25
+    XAUUSD: 60
+  candles: 400                        # تعداد کندل برای محاسبه اندیکاتور
+
+strategy:
+  mode: rsi_pullback         # rsi_pullback | ema_cross
+  ema_fast: 50
+  ema_slow: 200
+  ema_slope_bars: 10         # شیب EMA200 باید در جهت معامله باشد
+  rsi_period: 14
+  rsi_buy_level: 40          # خرید: RSI از زیر این سطح به بالا برگردد (در روند صعودی)
+  rsi_sell_level: 60         # فروش: RSI از بالای این سطح به پایین برگردد (در روند نزولی)
+  cross_fast: 20             # فقط برای mode=ema_cross
+  cross_slow: 50
+  atr_period: 14
+  atr_sl_mult: 1.5           # حد ضرر = 1.5 × ATR
+  rr: 2.0                    # حد سود = 2 × فاصله حد ضرر (نسبت 1:2)
+  min_atr_points: 30         # اگر بازار خیلی کم‌نوسان بود معامله نکن
+
+risk:
+  risk_per_trade_pct: 0.5    # درصد ریسک هر معامله از Equity (سقف سخت 2%)
+  max_daily_loss_pct: 3.0    # بعد از این ضرر روزانه تا فردا معامله نمی‌شود
+  max_total_drawdown_pct: 10.0   # افت از اوج سرمایه؛ بعد از آن متوقف تا ریست دستی (reset_halt.bat)
+  max_open_positions: 3
+  max_slippage_points: 20    # سقف لغزش (deviation)
+  magic: 880088              # شناسه‌ی معاملات این ربات
+  allow_live: false          # !!! فقط با دست و آگاهانه true شود. پیش‌فرض: false (فقط دمو)
+  min_seconds_between_orders: 3
+  max_orders_per_hour: 6
+
+news:
+  enabled: false             # توقف خودکار اطراف اخبار مهم (اختیاری، پیش‌فرض خاموش)
+  events_file: "news_events.csv"   # ستون‌ها: datetime_utc,currency,impact,title
+  minutes_before: 30
+  minutes_after: 30
+
+engine:
+  poll_seconds: 20
+  retry_attempts: 4
+  retry_base_delay: 2.0
+
+telegram:
+  owner_username: example_owner
+  language: fa               # fa | en (با دکمه 🌐 هم عوض می‌شود)
+
+paths:
+  data_dir: data
+  log_file: logs/88trader.log
